@@ -1,4 +1,5 @@
 # %%
+%pip uninstall sklearn
 %pip install scikit-learn
 import pandas as pd
 
