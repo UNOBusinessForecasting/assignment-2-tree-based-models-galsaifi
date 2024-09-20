@@ -1,6 +1,10 @@
 # %%
-%pip uninstall sklearn
-%pip install scikit-learn
+import subprocess
+import sys
+
+subprocess.check_call([sys.executable, "-m", "pip", "uninstall", "scikit-learn", "-y"])
+subprocess.check_call([sys.executable, "-m", "pip", "install", "scikit-learn"])
+
 import pandas as pd
 
 pd.set_option('display.max_rows', None)
