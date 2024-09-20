@@ -1,4 +1,5 @@
 # %%
+%pip install scikit-learn
 import pandas as pd
 
 pd.set_option('display.max_rows', None)
