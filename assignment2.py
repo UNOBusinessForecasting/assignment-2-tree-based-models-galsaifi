@@ -1,10 +1,4 @@
 # %%
-import subprocess
-import sys
-
-subprocess.check_call([sys.executable, "-m", "pip", "uninstall", "scikit-learn", "-y"])
-subprocess.check_call([sys.executable, "-m", "pip", "install", "scikit-learn"])
-
 import pandas as pd
 
 pd.set_option('display.max_rows', None)
@@ -15,7 +9,6 @@ test = pd.read_csv('https://github.com/dustywhite7/Econ8310/raw/master/Assignmen
 
 # %%
 import numpy as np
-import patsy as pt
 
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
@@ -24,13 +17,20 @@ from sklearn.model_selection import train_test_split
 y = train['meal']
 x = train.drop(['meal', 'id', 'DateTime'], axis = 1)
 
-model = DecisionTreeClassifier()
+model = DecisionTreeClassifier(min_samples_leaf=2, random_state = 42)
 
-# x, xt, y, yt = train_test_split(x, y, test_size=0.33, random_state=42)
+x, xt, y, yt = train_test_split(x, y, test_size=0.4, random_state=42)
 
 modelFit = model.fit(x,y)
 
 # %%
-xt = test.drop(['meal', 'id', 'DateTime'], axis=1)
-
 pred = modelFit.predict(xt)
+
+# %%
+print("In-sample accuracy: %s%%" % str(round(100*accuracy_score(y, model.predict(x)), 2)))
+print("Out of sample accuracy: %s%%" % str(round(100*accuracy_score(yt, model.predict(xt)), 2)))
+
+# %%
+x_test = test.drop(['meal', 'id', 'DateTime'], axis = 1)
+
+pred = modelFit.predict(x_test)
